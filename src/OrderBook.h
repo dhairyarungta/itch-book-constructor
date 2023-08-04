@@ -1,33 +1,29 @@
 #pragma once
 
+#include <map>
+#include <string>
+#include <sstream>
 #include <iostream>
-#include <climits>
-
-typedef double price_type;
-typedef long size_type;
-typedef uint64_t id_type ;
-typedef long long time_type;
-typedef bool side_type;
-
-extern id_type ID_DEFAULT;
-extern side_type SIDE_DEFAULT;
-extern size_type SIZE_DEFAULT;
-extern price_type PRICE_DEFAULT;
+#include "utility.h"
 
 
-uint16_t bswap_16(uint16_t value);
+class OrderBook
+{
+    time_type timestamp;
+    std::map<price_type, size_type>buySide;
+    std::map<price_type, size_type>sellSide;
 
-uint32_t bswap_32(uint32_t value);
+public :
+    OrderBook(void) = default; // default constructor
+    std::string getString(const size_t &)const ;
 
-uint64_t bswap_64(uint64_t value);
+    void modifySize(const price_type &,const  size_type&, const size_type&);
+        // void modifySize(price_type, size_type, side_type);
 
-uint16_t parse_uint16 (char* a);
+    void setTimeStamp(const time_type&);
 
-uint32_t parse_uint32 (char* a);
+    bool checkBookConsistency(void);
 
-uint64_t parse_uint64 (char* a);
+};
 
-uint64_t parse_ts(char* a);
-
-std::string getFileName(const std::string& s);
 
